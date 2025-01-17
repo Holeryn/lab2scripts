@@ -1,46 +1,52 @@
+# Tiamat nap-ša-a-ša i-ši-ḥa ša mu-ṣu-tu
+# šarrat tam-ti, ummi na-a-ri
+# gu-ul-li ma-ḥa-zu-um, ina a-me-li
+# i-li ma-la-a ša ša-ma-me
+#
+# šá-ti-ma ul-te-eb-bu, ina ši-a-mi ša qa-lu-u
+# ap-lu-ša, šar-ru-tu iš-tu tiamtu
+# mu-ṣu-ru ša-nu-ú, u ša-ru-ú la-ma-as-tu
+# ē-ru ina ša-ri-ti, u-ru-um ab-šu
+#
+# mar-du-uk i-zu-uz, qé-reb i-li ša-ma-me
+# ina qastu ša huraṣu, u ru-uq ša ša-ma-am
+# ziq-qur mu-ṣir-ti, i-ta-bu-šu ša pa-ṭir
+# ka-kab-u ī-du ina ta-ba-a-ti
+#
+# Tiamat i-par-ši, pa-ḫa-su rab-šu
+# mar-duk ina ša-bat-tu ṣup-pur-ta i-na-di
+# ka-ak-ku i-zak-ki-ir, lib-ba-ša i-ṣuḫ
+# u-ṣa-ar uš-ta-qil, ba-ru-um ša la-ni
+
+# Tiamat ribolliva nelle acque oscure,
+# Regina del Caos, madre dei mari,
+# La sua ira cresceva, tempestosa e fiera,
+# Forze primordiali sotto il cielo stellato.
+#
+# Contro gli dèi si levò, con fiamme e tempeste,
+# Suoi figli, mostri, plasmati dall’abisso.
+# Draghi, serpi e chimere terribili,
+# Un esercito nato dal grembo infinito.
+#
+# Marduk si alzò, il campione degli dèi,
+# Con il suo arco d’oro e la rete del cielo,
+# Il vento impetuoso soffiava sul suo comando,
+# E le stelle osservavano il fato imminente.
+#
+# Tiamat spalancò le sue fauci immense,
+# Ma Marduk gettò la rete, catturandola tutta,
+# Lanciò il suo dardo e il cuore colpì,
+# Divise il suo corpo, creò il firmamento.
+#
+# Dal suo cranio nacquero le montagne alte,
+# Le acque salate divennero i mari,
+# Il cielo si stese, un arco sopra la terra,
+# Dal caos, ordine, dal nulla, vita.
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 from scipy.optimize import curve_fit
-
-"""
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠛⠉⠀⠀⠀⠀⠀⠀⠀⠈⠉⠋⠻⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⡟⠋⠁⠀⢟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⣥⠊⠀⠀⠀⢠⢓⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠣⠔⡥⠀⠀⣀⣤⣾⣿⣧⣦⣤⣤⣀⣀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠑⠀⠒⢄⣴⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣶⣤⣄⣀⠀⠀⠀⠚⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⠀⣦⣡⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣄⠀⠀⢹⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢀⣾⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡉⠬⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣻⣷⠀⣺⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣧⢒⣽⣿⣿⣿⣿⣿⢟⡛⢀⠈⠀⠈⠁⠐⢯⣹⠎⠁⠈⠀⠁⠉⠋⡙⠻⣉⣿⠀⢺⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡷⠘⣶⣿⣿⣿⣿⠟⢍⡠⠉⢡⡕⠀⠀⢠⣿⣿⠧⡃⠀⠀⠀⠉⡀⠑⠲⣤⣿⠀⢿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡆⠉⣿⢟⣿⣿⣿⣿⣿⣿⣿⣤⡽⡽⠿⢁⣾⣿⣿⣧⢫⡍⣧⣤⣾⣷⣦⣀⣼⣿⣰⠛⡽⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡂⢰⡟⢋⣿⣿⣿⣿⣿⣿⣿⣷⣼⣱⣷⣿⣿⣿⣿⣯⣿⣿⣯⣿⣾⣿⣿⣿⣟⡗⣿⣇⢯⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡊⡄⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠛⣿⣿⣿⣿⣿⡷⢿⣿⣿⣿⣿⣿⣿⡯⠆⣿⢟⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣽⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⠏⢠⡿⢿⡟⠟⠣⠻⣏⣿⣿⣿⣿⣿⣿⡽⢸⣻⢸⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣽⡿⢹⣿⣿⣿⣿⣿⣿⣿⡇⠀⠈⠀⠀⠀⠀⠀⠀⠸⣿⣿⣿⣿⣿⡿⡆⣾⣇⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣹⣿⣿⣿⣿⣿⣿⣿⣿⣷⠃⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⡟⢤⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣼⣿⣿⣿⣿⣿⣿⣿⡟⠟⠱⢒⣀⡀⢀⣄⡐⣛⠻⣿⡿⣯⢷⡘⣺⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⢀⣿⣿⣿⣿⣿⣿⣿⣿⣁⣶⣿⣿⠏⠉⢉⢸⠿⣿⣿⣷⢿⣱⢏⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⡐⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢠⡐⣫⢞⣿⣷⣻⣾⢯⣓⢇⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⣿⣿⣿⡿⠟⠁⠀⠄⡁⢃⠈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡞⡲⣁⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⣿⣿⣿⠟⠛⠉⠁⠄⠐⠈⠄⠀⠄⠂⠈⠻⣿⣿⣿⣿⢿⣿⣿⣿⡿⠿⢫⢏⢿⡟⣿⠄⣢⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⣿⠿⠋⠀⠀⠀⠀⠈⡐⠈⠀⠈⠀⠀⠀⠀⠀⠹⣿⣿⣿⣿⣮⡉⠑⠂⠀⠀⠈⢐⣤⡴⣺⣿⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠋⠀⠄⠀⠀⠀⠀⠀⠠⠀⠐⠀⠀⠀⠀⠀⠀⠀⠈⡽⣿⣿⣿⣿⣷⣤⣤⣄⣛⣭⣧⣿⣿⣯⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⠏⠀⠀⢻⣿⣿⣿⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢿⣿⣿⣿⠏⠀⠀⠀⠚⣿⣿⡿⠀⠺⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⠏⠀⠀⠀⠰⢣⣸⣿⣿⠀⠀⠀⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠀⠀⠀⠀⠀⠣⣂⣿⣿⠀⠀⠀⠀⠈⠛⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢨⣿⣿⡀⠀⠀⠀⠀⠀⠀⠙⠻⢿⣿⣿⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⡆⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣿⣿⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⣿⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⡷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣿⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠛
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠃⠀⠀⠀⠀⠀⢀⡠⡀⠀⠀⠀⠀⠀⠀⠐
-⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠯⠀⠀⠀⠀⠀⠀⠀⠕⠾⠀⠀⠀⠀⠀⠀⠀⠀"""
 
 PRECISIONE = 1000
 
