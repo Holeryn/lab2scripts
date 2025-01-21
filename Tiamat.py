@@ -112,7 +112,7 @@ def fit_curve(X,Y,f,A,B,err_X=None,err_Y=None,limiti=([-np.inf,-np.inf,-np.inf],
 
     print(cov_matrix)
 
-    return Xfit,Yfit,c,b,cov_matrix
+    return Xfit,Yfit,c,b,a,cov_matrix
 
 
 def fit_polinomiale(X,Y,n):
