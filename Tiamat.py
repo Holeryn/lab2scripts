@@ -45,6 +45,8 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import norm
+
 from scipy.stats import linregress
 from scipy.optimize import curve_fit
 
@@ -104,7 +106,7 @@ def fit_lineare(I_wi, R_wi, err_I_wi=None, err_R_wi=None):
 # incui i parametri hanno dei vincoli:
 # limiti = ([cmin,bmin,amin],[cmax,bmax,amax])
 def fit_curve(X,Y,f,A,B,err_X=None,err_Y=None,limiti=([-np.inf,-np.inf,-np.inf],[np.inf,np.inf,np.inf])):
-    params,cov_matrix = curve_fit(f,X,Y,sigma=err_Y,absolute_sigma=True,bounds=limiti)
+    params,cov_matrix = curve_fit(f,X,Y,sigma=err_Y,bounds=limiti)
     [c,b,a] = params
 
     Xfit = np.linspace(A,B,PRECISIONE)
